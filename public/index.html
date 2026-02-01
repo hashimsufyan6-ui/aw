@@ -19,7 +19,6 @@
             --blood-red: #8a0a0a;
             --carbon: #0a0a0a;
             --steel: #2a2a2a;
-            --overlay: rgba(0, 0, 0, 0.85);
         }
 
         body {
@@ -45,7 +44,6 @@
             filter: grayscale(100%) contrast(1.2) brightness(0.4);
         }
 
-        /* --- WEBGL LAYER --- */
         #embers-canvas {
             position: fixed;
             inset: 0;
@@ -54,7 +52,6 @@
             mix-blend-mode: screen;
         }
 
-        /* --- UI ELEMENTS --- */
         .font-heavy { font-family: 'Anton', sans-serif; text-transform: uppercase; }
         .font-tech { font-family: 'Teko', sans-serif; }
 
@@ -62,7 +59,6 @@
             background: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 31, 31, 0.1);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
         }
 
         .btn-rage {
@@ -72,63 +68,29 @@
             font-family: 'Anton', sans-serif;
             letter-spacing: 2px;
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .btn-rage:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px var(--neon-red);
-            text-shadow: 0 0 10px white;
+            transition: 0.3s;
         }
 
-        .nav-item {
-            position: relative;
-            color: #888;
-            transition: 0.3s;
-        }
+        .nav-item { position: relative; color: #888; transition: 0.3s; }
         .nav-item.active { color: var(--neon-red); }
         .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--neon-red);
-            transition: 0.3s;
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--neon-red); transition: 0.3s;
         }
         .nav-item:hover::after { width: 100%; }
 
-        /* --- ANIMATIONS --- */
-        .glitch-text {
-            position: relative;
-        }
-        .glitch-text::before, .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-        }
+        .glitch-text { position: relative; }
         .glitch-text::before {
-            left: 2px;
-            text-shadow: -1px 0 red;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim 3s infinite linear alternate-reverse;
+            content: attr(data-text); position: absolute; left: 2px; text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 3s infinite linear alternate-reverse;
         }
+        
         @keyframes glitch-anim {
             0% { clip: rect(11px, 9999px, 81px, 0); }
-            20% { clip: rect(87px, 9999px, 19px, 0); }
-            40% { clip: rect(12px, 9999px, 33px, 0); }
-            60% { clip: rect(66px, 9999px, 7px, 0); }
-            80% { clip: rect(34px, 9999px, 55px, 0); }
             100% { clip: rect(4px, 9999px, 96px, 0); }
         }
 
-        /* --- SCROLLBAR --- */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--blood-red); }
     </style>
 </head>
@@ -141,9 +103,6 @@
         </video>
     </div>
 
-    <div class="fixed inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_90%)] z-[-8] pointer-events-none"></div>
-    <div class="fixed inset-0 bg-black/40 z-[-9] pointer-events-none" id="scanlines" style="background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%;"></div>
-    
     <canvas id="embers-canvas"></canvas>
 
     <nav class="fixed top-0 w-full z-50 py-6 border-b border-white/5 bg-black/80 backdrop-blur-md">
@@ -152,18 +111,14 @@
                 <span class="text-3xl font-heavy text-white italic tracking-tighter">AW GYM <span class="text-[var(--neon-red)]">ENTERPRISES</span></span>
                 <span class="text-[10px] tracking-[0.4em] text-gray-400 font-tech">EST. 2026 // PAKISTAN</span>
             </div>
-
             <div class="hidden md:flex gap-10 font-heavy text-lg tracking-wider">
                 <button onclick="router.navigate('home')" class="nav-item active" id="nav-home">HQ</button>
                 <button onclick="router.navigate('shop')" class="nav-item" id="nav-shop">ARMORY</button>
                 <button onclick="router.navigate('booking')" class="nav-item" id="nav-booking">TRAINING</button>
             </div>
-
-            <div class="flex items-center gap-4">
-                <div class="relative cursor-pointer" onclick="router.toggleCart()">
-                    <svg class="w-8 h-8 text-white hover:text-[var(--neon-red)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-[var(--neon-red)] text-white text-xs font-bold w-5 h-5 flex items-center justify-center">0</span>
-                </div>
+            <div class="relative cursor-pointer" onclick="router.toggleCart()">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span id="cart-badge" class="absolute -top-1 -right-1 bg-[var(--neon-red)] text-white text-xs font-bold w-5 h-5 flex items-center justify-center">0</span>
             </div>
         </div>
     </nav>
@@ -175,9 +130,7 @@
             <h2 class="font-heavy text-2xl text-white">YOUR ARSENAL</h2>
             <button onclick="router.toggleCart()" class="text-gray-400 hover:text-white">✕</button>
         </div>
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <p class="text-center text-gray-500 mt-10">NO EQUIPMENT SELECTED</p>
-        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
         <div class="p-6 border-t border-red-900 bg-black">
             <div class="flex justify-between font-heavy text-xl mb-4">
                 <span>TOTAL</span>
@@ -188,80 +141,89 @@
     </div>
 
     <script>
-        // --- 1. CONFIGURATION ---
-        const CONFIG = {
-            whatsapp: "923497814918",
-            currency: "PKR"
-        };
-
-        // --- 2. PRODUCT GENERATOR ---
-        const PRODUCTS = [];
+        const CONFIG = { whatsapp: "923497814918", currency: "PKR" };
         const CATEGORIES = ['STRENGTH', 'CARDIO', 'SUPPLEMENTS'];
-        
-        const IMG_MAP = {
-            STRENGTH: ['https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=600&q=80'],
-            CARDIO: ['https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=600&q=80'],
-            SUPPLEMENTS: ['https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=600&q=80']
-        };
+        const PRODUCTS = [];
 
-        CATEGORIES.forEach((cat) => {
-            for(let i=1; i<=16; i++) {
+        // Re-adding the Product Generator
+        CATEGORIES.forEach(cat => {
+            for(let i=1; i<=12; i++) {
                 PRODUCTS.push({
-                    id: `${cat.substr(0,3)}-${i}`,
+                    id: `${cat}-${i}`,
                     name: `AW ${cat} UNIT MK-${i}`,
                     category: cat,
-                    price: 5000 + (i*1000),
-                    image: IMG_MAP[cat][0],
-                    desc: "Heavy-duty industrial grade construction."
+                    price: cat === 'STRENGTH' ? 15000 + (i*1000) : cat === 'CARDIO' ? 85000 + (i*5000) : 4500 + (i*200),
+                    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80',
+                    desc: "Industrial grade heavy duty construction."
                 });
             }
         });
 
-        const STATE = {
-            cart: [],
-            currentTab: 'STRENGTH'
-        };
+        const STATE = { cart: [], currentTab: 'STRENGTH' };
 
-        // --- 3. VIDEO ENGINE LOGIC ---
-        const VideoEngine = {
-            init: () => { console.log("Video Engine Online"); },
-            play: () => {
-                const video = document.getElementById('bg-video');
-                if(video) video.play().catch(() => console.log("Waiting for user interaction"));
+        const router = {
+            navigate: (page) => {
+                const app = document.getElementById('app');
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                if(document.getElementById(`nav-${page}`)) document.getElementById(`nav-${page}`).classList.add('active');
+                
+                app.innerHTML = Views[page]();
+                if(page === 'shop') router.renderProducts();
+            },
+            filterShop: (cat) => { STATE.currentTab = cat; router.navigate('shop'); },
+            renderProducts: () => {
+                const grid = document.getElementById('product-grid');
+                grid.innerHTML = PRODUCTS.filter(p => p.category === STATE.currentTab).map(p => `
+                    <div class="glass-panel p-5 group hover:border-[var(--neon-red)] transition-all">
+                        <img src="${p.image}" class="w-full h-48 object-cover mb-4 filter grayscale group-hover:grayscale-0 transition-all">
+                        <h3 class="font-heavy text-xl text-white">${p.name}</h3>
+                        <p class="text-[var(--neon-red)] font-tech text-lg">${p.price.toLocaleString()} PKR</p>
+                        <button onclick="router.addToCart('${p.id}')" class="w-full mt-4 border border-white/20 py-2 hover:bg-white hover:text-black transition-all">ADD TO ARSENAL</button>
+                    </div>
+                `).join('');
+            },
+            addToCart: (id) => {
+                const p = PRODUCTS.find(x => x.id === id);
+                STATE.cart.push(p);
+                router.updateCartUI();
+            },
+            updateCartUI: () => {
+                document.getElementById('cart-badge').innerText = STATE.cart.length;
+                const total = STATE.cart.reduce((s, i) => s + i.price, 0);
+                document.getElementById('cart-total').innerText = `PKR ${total.toLocaleString()}`;
+                document.getElementById('cart-items').innerHTML = STATE.cart.map((i, index) => `
+                    <div class="flex justify-between items-center bg-white/5 p-3 border-l-2 border-[var(--neon-red)]">
+                        <div class="font-heavy text-sm">${i.name}</div>
+                        <button onclick="router.removeFromCart(${index})" class="text-red-500">✕</button>
+                    </div>
+                `).join('');
+            },
+            removeFromCart: (idx) => { STATE.cart.splice(idx, 1); router.updateCartUI(); },
+            toggleCart: () => document.getElementById('cart-modal').classList.toggle('translate-x-full'),
+            checkout: () => {
+                const msg = `*NEW ORDER*%0A${STATE.cart.map(i => `- ${i.name}`).join('%0A')}`;
+                window.open(`https://wa.me/${CONFIG.whatsapp}?text=${msg}`);
             }
         };
 
-        // --- 4. VIEWS ---
         const Views = {
             home: () => `
                 <div class="min-h-[80vh] flex flex-col justify-center items-center text-center px-4">
                     <h2 class="text-[var(--neon-red)] font-tech tracking-[0.5em] text-xl mb-4">AW GYM ENTERPRISES</h2>
                     <h1 class="text-7xl md:text-9xl font-heavy text-white mb-6 glitch-text" data-text="BUILD YOUR BODY">BUILD YOUR BODY</h1>
-                    <div class="flex gap-6 justify-center">
-                        <button onclick="router.navigate('shop')" class="btn-rage px-10 py-4 text-xl">ENTER ARMORY</button>
-                    </div>
+                    <button onclick="router.navigate('shop')" class="btn-rage px-10 py-4 text-xl">ENTER ARMORY</button>
                 </div>`,
-            shop: () => `<div class="p-10 text-center"><h1 class="text-5xl font-heavy">THE ARMORY</h1><p class="mt-4">Select Category Above</p></div>`,
-            booking: () => `<div class="p-10 text-center"><h1 class="text-5xl font-heavy">CONTACT HQ</h1><p class="mt-4">+92 349 7814918</p></div>`
+            shop: () => `
+                <div class="max-w-7xl mx-auto px-6 pb-20">
+                    <div class="flex gap-4 mb-10 overflow-x-auto">
+                        ${CATEGORIES.map(cat => `<button onclick="router.filterShop('${cat}')" class="px-8 py-2 border ${STATE.currentTab === cat ? 'bg-red-600 border-red-600' : 'border-white/20 hover:border-white'} font-heavy">${cat}</button>`).join('')}
+                    </div>
+                    <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+                </div>`,
+            booking: () => `<div class="text-center pt-20"><h1 class="text-5xl font-heavy">CONTACT HQ</h1><p class="mt-4 font-tech text-2xl text-[var(--neon-red)]">+${CONFIG.whatsapp}</p></div>`
         };
 
-        // --- 5. ROUTER ---
-        const router = {
-            navigate: (page) => {
-                const app = document.getElementById('app');
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                const nav = document.getElementById(`nav-${page}`);
-                if(nav) nav.classList.add('active');
-
-                app.innerHTML = Views[page]();
-                VideoEngine.play();
-            },
-            toggleCart: () => document.getElementById('cart-modal').classList.toggle('translate-x-full'),
-            checkout: () => alert("Proceeding to WhatsApp..."),
-            updateCartUI: () => { /* Cart logic here */ }
-        };
-
-        // --- 6. ATMOSPHERE ---
+        // --- ATMOSPHERE (Embers) ---
         const initEmbers = () => {
             const canvas = document.getElementById('embers-canvas');
             const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
@@ -270,24 +232,17 @@
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
             const geo = new THREE.BufferGeometry();
-            const pos = new Float32Array(300 * 3);
-            for(let i=0; i<900; i++) pos[i] = (Math.random()-0.5)*15;
+            const pos = new Float32Array(400 * 3);
+            for(let i=0; i<1200; i++) pos[i] = (Math.random()-0.5)*15;
             geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
             const particles = new THREE.Points(geo, new THREE.PointsMaterial({color: 0xFF1F1F, size: 0.05}));
             scene.add(particles);
-            const animate = () => {
-                requestAnimationFrame(animate);
-                particles.rotation.y += 0.001;
-                renderer.render(scene, camera);
-            };
-            animate();
+            function anim() { requestAnimationFrame(anim); particles.rotation.y += 0.001; renderer.render(scene, camera); }
+            anim();
         };
 
-        window.onload = () => {
-            VideoEngine.init();
-            initEmbers();
-            router.navigate('home');
-        };
+        window.onload = () => { initEmbers(); router.navigate('home'); };
     </script>
 </body>
-</html>
+                    </html>
+    
